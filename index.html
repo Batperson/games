@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Games Arcade</title>
+<style>
+:root{--bg:#120a14;--ink:#f6efe6;--dim:#b9a9b4;--line:rgba(255,255,255,.12)}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{background:radial-gradient(ellipse at 50% -10%,#3a1430 0,#1a0d1c 45%,var(--bg) 100%) fixed;color:var(--ink);
+  font-family:"Trebuchet MS","Segoe UI",Verdana,sans-serif;padding:0 16px 48px}
+header{max-width:1040px;margin:0 auto;padding:48px 0 28px;text-align:center}
+h1{margin:0;font-family:Georgia,"Times New Roman",serif;font-size:clamp(34px,7vw,60px);letter-spacing:.14em;font-weight:700;
+  background:linear-gradient(#fff6c8,#ffd54a 45%,#c98a12);-webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 0 18px rgba(255,170,40,.35))}
+header p{margin:10px 0 0;color:var(--dim);letter-spacing:.08em;font-size:15px}
+main{max-width:1040px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+a.card{display:flex;flex-direction:column;text-decoration:none;color:inherit;border-radius:18px;overflow:hidden;
+  background:#1d1220;border:1px solid var(--line);box-shadow:0 10px 30px rgba(0,0,0,.45);transition:transform .15s,box-shadow .15s,border-color .15s}
+a.card:hover,a.card:focus-visible{transform:translateY(-5px);border-color:var(--acc);box-shadow:0 16px 40px rgba(0,0,0,.6),0 0 0 1px var(--acc),0 0 28px -6px var(--acc);outline:none}
+.art{height:170px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.art svg{width:100%;height:100%;display:block}
+.body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:8px;flex:1}
+h2{margin:0;font-size:22px;letter-spacing:.03em}
+h2 small{display:block;font-size:12px;font-weight:400;letter-spacing:.16em;text-transform:uppercase;color:var(--acc);margin-bottom:4px}
+.body p{margin:0;color:var(--dim);font-size:14.5px;line-height:1.5;flex:1}
+.meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.meta span{font-size:11.5px;letter-spacing:.06em;padding:3px 9px;border-radius:999px;border:1px solid var(--line);color:var(--dim)}
+.play{margin-top:8px;align-self:flex-start;font-weight:700;letter-spacing:.12em;font-size:13px;padding:8px 18px;border-radius:999px;background:var(--acc);color:#1a0d1c}
+footer{max-width:1040px;margin:36px auto 0;text-align:center;color:var(--dim);font-size:12.5px;letter-spacing:.06em}
+</style>
+</head>
+<body>
+<header>
+  <h1>GAMES ARCADE</h1>
+  <p>Three browser games. No installs, no accounts — pick one and play.</p>
+</header>
+<main>
+  <a class="card" href="four-rivers-gold.html" style="--acc:#ffd54a">
+    <div class="art" style="background:radial-gradient(ellipse at 50% 120%,#c8102e,#5d030c 70%)">
+      <svg viewBox="0 0 300 170" aria-hidden="true">
+        <g opacity=".12" fill="#ffd54a"><path d="M150 190 L-40 -40 L20 -40Z M150 190 L90 -40 L130 -40Z M150 190 L170 -40 L210 -40Z M150 190 L280 -40 L340 -40Z"/></g>
+        <g transform="translate(62,40)"><rect width="54" height="72" rx="8" fill="#fff8e1" stroke="#9a6b00" stroke-width="3"/><text x="27" y="52" text-anchor="middle" font-size="42" font-weight="700" fill="#0b7a3b" font-family="KaiTi,STKaiti,serif" lang="zh-Hant">發</text></g>
+        <g transform="translate(123,50)"><rect width="54" height="72" rx="8" fill="#fff8e1" stroke="#9a6b00" stroke-width="3"/><circle cx="27" cy="36" r="19" fill="#ffcf3a" stroke="#8a5a00" stroke-width="2"/><rect x="20" y="29" width="14" height="14" fill="#8a0a18"/></g>
+        <g transform="translate(184,40)"><rect width="54" height="72" rx="8" fill="#d0122e" stroke="#9a6b00" stroke-width="3"/><text x="27" y="52" text-anchor="middle" font-size="42" font-weight="700" fill="#ffd54a" font-family="KaiTi,STKaiti,serif" lang="zh-Hant">財</text></g>
+      </svg>
+    </div>
+    <div class="body">
+      <h2><small>Tile-matching solitaire</small>大發財 · Four Rivers Gold</h2>
+      <p>Mahjong “Four Rivers” solitaire in 1930s Shanghai. Match tiles joined by a line of two turns or fewer and clear the table before the jackpot drains away.</p>
+      <div class="meta"><span>Mouse or touch</span><span>Sound</span><span>3 table sizes</span></div>
+      <span class="play">PLAY ▸</span>
+    </div>
+  </a>
+  <a class="card" href="regolith-runner.html" style="--acc:#7df9ff">
+    <div class="art" style="background:linear-gradient(#05060f,#141a3a)">
+      <svg viewBox="0 0 300 170" aria-hidden="true">
+        <g fill="#fff"><circle cx="30" cy="24" r="1.2"/><circle cx="84" cy="50" r="1"/><circle cx="140" cy="18" r="1.4"/><circle cx="200" cy="44" r="1"/><circle cx="262" cy="22" r="1.3"/><circle cx="236" cy="70" r="1"/><circle cx="56" cy="80" r="1"/></g>
+        <circle cx="236" cy="40" r="20" fill="#3b6cff"/><path d="M222 34 q8 -8 18 -2 q-4 8 -18 2z M232 48 q10 -4 18 2 q-8 6 -18 -2z" fill="#38d39f"/>
+        <path d="M0 112 L40 92 L80 110 L130 84 L180 108 L230 90 L300 112 L300 170 L0 170Z" fill="#2a2f55"/>
+        <path d="M0 132 L300 132 L300 170 L0 170Z" fill="#8a8fa8"/><path d="M0 132 h300" stroke="#c9cde0" stroke-width="2"/>
+        <ellipse cx="216" cy="134" rx="20" ry="4" fill="#3a3f5c"/>
+        <g transform="translate(96,104)"><rect x="4" y="6" width="50" height="14" rx="4" fill="#ff5a8a"/><rect x="18" y="-4" width="22" height="12" rx="3" fill="#7df9ff"/><circle cx="12" cy="24" r="7" fill="#1a1d33" stroke="#c9cde0" stroke-width="2"/><circle cx="30" cy="24" r="7" fill="#1a1d33" stroke="#c9cde0" stroke-width="2"/><circle cx="48" cy="24" r="7" fill="#1a1d33" stroke="#c9cde0" stroke-width="2"/><rect x="62" y="10" width="12" height="3" fill="#ffe66b"/></g>
+      </svg>
+    </div>
+    <div class="body">
+      <h2><small>Arcade action</small>Regolith Runner</h2>
+      <p>A coin-op style lunar rover run. Jump the craters, blast what gets in your way and make it through every sector of the Moon’s surface.</p>
+      <div class="meta"><span>Keyboard or touch</span><span>Retro pixels</span></div>
+      <span class="play">PLAY ▸</span>
+    </div>
+  </a>
+  <a class="card" href="pebblebrook.html" style="--acc:#ff8fbd">
+    <div class="art" style="background:linear-gradient(#bfe6ff,#e9f7ff)">
+      <svg viewBox="0 0 300 170" aria-hidden="true">
+        <circle cx="244" cy="40" r="18" fill="#fff2a8"/>
+        <g fill="#fff"><ellipse cx="70" cy="40" rx="26" ry="9"/><ellipse cx="90" cy="34" rx="18" ry="9"/><ellipse cx="180" cy="58" rx="22" ry="7"/></g>
+        <g stroke="#5b4a6b" stroke-width="1.5" stroke-linejoin="round">
+          <path d="M0 120 h300 v50 h-300z" fill="#8fd67a"/>
+          <path d="M40 120 v-30 h40 v30z" fill="#b98a5e"/><path d="M40 90 l12 -10 h40 l-12 10z" fill="#9fe08a"/><path d="M80 90 l12 -10 v30 l-12 10z" fill="#9a6f48"/>
+          <path d="M120 120 v-40 h44 v40z" fill="#ffd1e3"/><path d="M112 80 l30 -24 l30 24z" fill="#ff8fbd"/><path d="M136 120 v-18 h12 v18z" fill="#b98a5e"/>
+          <path d="M214 120 v-34 h10 v34z" fill="#b98a5e"/><path d="M198 86 h42 v-30 h-42z" fill="#6cc76a"/>
+          <path d="M256 120 v-16 h30 v16z" fill="#8fc9ff"/>
+        </g>
+      </svg>
+    </div>
+    <div class="body">
+      <h2><small>3D sandbox</small>Pebblebrook</h2>
+      <p>A cosy little block world. Wander the village, chat with the neighbours, gather things for your backpack and build whatever you like.</p>
+      <div class="meta"><span>Keyboard + mouse</span><span>Desktop</span><span>Saves your world</span></div>
+      <span class="play">PLAY ▸</span>
+    </div>
+  </a>
+</main>
+<footer>All games run entirely in your browser.</footer>
+</body>
+</html>
