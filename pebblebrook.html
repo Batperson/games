@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Pebblebrook</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #bfe6ff;
+    font-family: "Trebuchet MS", "Segoe UI", Verdana, sans-serif; color: #5b4a6b; user-select: none; }
+  canvas#game { display: block; width: 100%; height: 100%; }
+  .panel { background: rgba(255, 250, 244, 0.92); border: 3px solid #ffd1e3; border-radius: 16px;
+    box-shadow: 0 4px 0 rgba(120, 90, 120, 0.15); }
+  #crosshair { position: fixed; left: 50%; top: 50%; width: 14px; height: 14px; margin: -7px 0 0 -7px;
+    border: 2px solid rgba(255,255,255,0.95); border-radius: 50%; box-shadow: 0 0 0 1px rgba(90,70,110,0.5); pointer-events: none; }
+  #underwater { position: fixed; inset: 0; background: rgba(110, 190, 240, 0.35); pointer-events: none; display: none; }
+
+  #tracker { position: fixed; left: 14px; top: 14px; width: 290px; padding: 10px 14px; pointer-events: none; }
+  #tracker h3 { margin: 0 0 4px; font-size: 16px; color: #e0679a; }
+  #tracker .goal { font-size: 13px; margin: 3px 0; }
+  #tracker .goal.done { color: #4fae78; }
+  #tracker .hint { font-size: 13px; }
+
+  #compass { position: fixed; top: 14px; left: 50%; transform: translateX(-50%); padding: 6px 14px;
+    font-size: 13px; display: flex; align-items: center; gap: 8px; pointer-events: none; }
+  #compassArrow { display: inline-block; font-size: 18px; color: #e0679a; }
+
+  #hotbar { position: fixed; bottom: 14px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; padding: 8px; }
+  .slot { width: 52px; height: 52px; border-radius: 10px; background: rgba(255,255,255,0.7); border: 3px solid #f3e3ee;
+    position: relative; box-sizing: border-box; background-size: 36px 36px; background-repeat: no-repeat;
+    background-position: center; image-rendering: pixelated; }
+  .slot.sel { border-color: #ff8fbd; background-color: #fff; transform: translateY(-4px); }
+  .slot .n { position: absolute; right: 3px; bottom: 1px; font-size: 12px; font-weight: bold; color: #5b4a6b;
+    text-shadow: 0 0 3px #fff, 0 0 3px #fff; }
+  .slot .k { position: absolute; left: 4px; top: 1px; font-size: 10px; color: #b9a6c4; }
+  #itemName { position: fixed; bottom: 92px; left: 50%; transform: translateX(-50%); font-size: 14px; color: #fff;
+    text-shadow: 0 1px 3px rgba(60,40,80,0.8); pointer-events: none; }
+
+  #toasts { position: fixed; top: 64px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column;
+    align-items: center; gap: 6px; pointer-events: none; }
+  .toast { padding: 6px 16px; font-size: 14px; animation: pop 0.25s ease-out; }
+  .toast.big { font-size: 22px; padding: 12px 28px; color: #e0679a; border-color: #ffe27a; }
+  @keyframes pop { from { transform: scale(0.6); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+  #dialog { position: fixed; bottom: 110px; left: 50%; transform: translateX(-50%); width: min(620px, 86vw);
+    padding: 14px 20px 12px; display: none; }
+  #dialog .who { font-weight: bold; color: #e0679a; font-size: 17px; margin-bottom: 4px; }
+  #dialog .text { font-size: 16px; line-height: 1.4; min-height: 44px; }
+  #dialog .next { text-align: right; font-size: 12px; color: #b9a6c4; }
+
+  #inventory { position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); width: min(560px, 90vw);
+    padding: 16px 20px; display: none; }
+  #inventory h2 { margin: 0 0 4px; color: #e0679a; }
+  #inventory p { margin: 2px 0 10px; font-size: 13px; }
+  #invGrid { display: flex; flex-wrap: wrap; gap: 6px; }
+  #invGrid .slot { cursor: pointer; }
+  #invGrid .slot:hover { border-color: #ff8fbd; }
+
+  #overlay { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
+    background: rgba(255, 220, 235, 0.55); backdrop-filter: blur(3px); cursor: pointer; }
+  #overlay .card { padding: 24px 36px; text-align: center; max-width: 520px; cursor: pointer; }
+  #overlay h1 { margin: 0; font-size: 46px; color: #e0679a; letter-spacing: 1px; }
+  #overlay .sub { margin: 2px 0 14px; font-size: 15px; }
+  #overlay .play { display: inline-block; margin: 6px 0 14px; padding: 10px 26px; font-size: 20px; font-weight: bold;
+    color: #fff; background: #ff8fbd; border-radius: 999px; box-shadow: 0 4px 0 #e0679a; }
+  #overlay table { margin: 0 auto 10px; font-size: 13px; text-align: left; border-spacing: 10px 2px; }
+  #overlay td:first-child { font-weight: bold; color: #7a5c99; text-align: right; }
+  #newWorld { font: inherit; font-size: 12px; color: #9a86a8; background: none; border: 0; text-decoration: underline; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="game"></canvas>
+<div id="underwater"></div>
+<div id="crosshair"></div>
+
+<div id="tracker" class="panel"></div>
+<div id="compass" class="panel"><span id="compassArrow">&#9650;</span><span id="compassText">Village</span></div>
+<div id="toasts"></div>
+<div id="itemName"></div>
+<div id="hotbar" class="panel"></div>
+
+<div id="dialog" class="panel">
+  <div class="who"></div>
+  <div class="text"></div>
+  <div class="next">click to continue &#9658;</div>
+</div>
+
+<div id="inventory" class="panel">
+  <h2>Backpack</h2>
+  <p>Click an item to put it in the highlighted hotbar slot. Press E to close.</p>
+  <div id="invGrid"></div>
+</div>
+
+<div id="overlay">
+  <div class="card panel">
+    <h1>Pebblebrook</h1>
+    <div class="sub">a cosy little block world</div>
+    <div class="play">Click to play</div>
+    <table>
+      <tr><td>W A S D</td><td>walk (hold Shift to run)</td></tr>
+      <tr><td>Mouse</td><td>look around</td></tr>
+      <tr><td>Space</td><td>jump / swim up</td></tr>
+      <tr><td>Left click</td><td>break a block, pick, or say hello</td></tr>
+      <tr><td>Right click</td><td>place the block you are holding</td></tr>
+      <tr><td>1 - 9 / wheel</td><td>choose a hotbar slot</td></tr>
+      <tr><td>E</td><td>open your backpack</td></tr>
+      <tr><td>Esc</td><td>pause</td></tr>
+    </table>
+    <button id="newWorld">Start a brand new world</button>
+  </div>
+</div>
+
+<script src="three.min.js"></script>
+<script src="pebblebrook-data.js"></script>
+<script src="pebblebrook-textures.js"></script>
+<script src="pebblebrook-game.js"></script>
+</body>
+</html>
